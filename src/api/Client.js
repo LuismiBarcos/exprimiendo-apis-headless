@@ -20,3 +20,16 @@ export const getBlogsQuery = gql`
     }
   }
 `;
+
+export const getUsersQuery = gql`
+  query userAccounts {
+    userAccounts {
+      items {
+        name
+        emailAddress
+        image
+        jobTitle
+      }
+    }
+  }
+`;
