@@ -1,22 +1,17 @@
-import Connections from "../api/Connections";
-import { METHODS, BLOGS } from "../api/ApiConstans";
-import  AuthorizationService from '../api/AuthorizationService';
+import { client, getBlogsQuery } from "../api/Client";
 
-export default {
-    getBlogPosts
-}
-
-/**
- * Get the blog posts of a concrete site
- * @param {String} siteId Id of the site where are the blogs
- * @param {Number} page Page number to recover
- * @param {Number} pageSize Number of items to recover
- * @returns {Promise<Any>} Returns a promise with the json of the blogs posts
- */
-async function getBlogPosts(siteId, page = 1, pageSize = 20) {
-    // const headers = Connections.createHeadersWithoutAuthorization();
-    const headers = Connections.createHeadersBasicAuthorization(
-        AuthorizationService.createBasicAuthorizationToken("test@liferay.com", "test"));
-    const response = await Connections.doApiCall(METHODS.GET, headers, BLOGS.BASE_URL + siteId + BLOGS.BLOG_POSTINGS);
-    return response.json();
+export default class BlogsService {
+  /**
+   * Get the blogsposts of a site
+   * @param {String} siteKey key of a specific site
+   * @return {Promise<import("@apollo/client").ApolloQueryResult>} Promise with the results
+   */
+  getBlogPosts(siteKey) {
+    return client.query({
+      query: getBlogsQuery,
+      variables: {
+        siteKey: siteKey,
+      },
+    });
+  }
 }
