@@ -16,18 +16,7 @@ export default () => {
     <div className="home">
       <div className="container">
         <div className="row">
-          {blogs.map((blog, index) => {
-            return (
-              <div className="col-4">
-                <Card
-                  src={"http://localhost:8080/" + blog.image.contentUrl}
-                  title={blog.headline}
-                  key={index}
-                  description={blog.alternativeHeadline}
-                />
-              </div>
-            );
-          })}
+          <UsersList />
         </div>
       </div>
     </div>
