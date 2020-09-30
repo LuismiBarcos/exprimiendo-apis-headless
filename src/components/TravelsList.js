@@ -12,6 +12,7 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -53,10 +54,12 @@ export default ({ homeViewModel }) => {
                 title={blog.headline}
                 subheader="September 14, 2016"
               />
-              <CardMedia
-                className={classes.media}
-                image={"http://localhost:8080" + blog.image.contentUrl}
-              />
+              <Link to="/steps">
+                <CardMedia
+                  className={classes.media}
+                  image={"http://localhost:8080" + blog.image.contentUrl}
+                />
+              </Link>
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                   {blog.articleBody}
