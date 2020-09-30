@@ -1,5 +1,4 @@
 import React from "react";
-import "./Home.css";
 import UsersList from "../components/UsersList";
 import TravelsList from "../components/TravelsList";
 
@@ -8,7 +7,7 @@ import HomeViewModel from "../view-models/HomeViewModel";
 export default () => {
   const homeViewModel = new HomeViewModel();
   return (
-    <div className="home">
+    <div className="">
       <div className="container-fluid">
         <div className="row">
           <div className="col-3">
