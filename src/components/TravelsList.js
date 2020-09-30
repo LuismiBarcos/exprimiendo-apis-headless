@@ -36,7 +36,7 @@ export default ({ homeViewModel }) => {
       <div className="row">
         {blogs.map((blog, index) => (
           <div key={index} className="col-4">
-            <Card>
+            <Card className="mt-3">
               <CardHeader
                 avatar={
                   <Avatar
