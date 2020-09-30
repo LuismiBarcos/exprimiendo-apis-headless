@@ -32,8 +32,8 @@ export default ({ homeViewModel }) => {
   return (
     <Paper>
       <List className={classes.root}>
-        {users.map((user) => (
-          <>
+        {users.map((user, index) => (
+          <div key={index}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 <Avatar
@@ -59,7 +59,7 @@ export default ({ homeViewModel }) => {
               />
             </ListItem>
             <Divider variant="inset" component="li" />
-          </>
+          </div>
         ))}
       </List>
     </Paper>
