@@ -1,15 +1,22 @@
 import React from "react";
 import "./Home.css";
 import UsersList from "../components/UsersList";
+import TravelsList from "../components/TravelsList";
+
 import HomeViewModel from "../view-models/HomeViewModel";
 
 export default () => {
   const homeViewModel = new HomeViewModel();
   return (
     <div className="home">
-      <div className="container">
+      <div className="container-fluid">
         <div className="row">
-          <UsersList homeViewModel={homeViewModel} />
+          <div className="col-3">
+            <UsersList homeViewModel={homeViewModel} />
+          </div>
+          <div className="col-9">
+            <TravelsList homeViewModel={homeViewModel} />
+          </div>
         </div>
       </div>
     </div>

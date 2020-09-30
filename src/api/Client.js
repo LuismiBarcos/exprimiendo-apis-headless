@@ -13,6 +13,7 @@ export const getBlogsQuery = gql`
       items {
         headline
         alternativeHeadline
+        articleBody
         image {
           contentUrl
         }
