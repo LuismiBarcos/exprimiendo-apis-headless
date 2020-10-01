@@ -26,24 +26,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default ({ homeViewModel }) => {
   const classes = useStyles();
-  const [blogs, setBlogs] = useState([]);
+  const [travels, setTravels] = useState([]);
 
   useEffect(() => {
-    homeViewModel.getBlogPosts(setBlogs);
-  }, [homeViewModel]);
-
+    homeViewModel.getTravels(setTravels)
+  }, [homeViewModel])
   return (
     <div className="container-fluid">
       <div className="row">
-        {blogs.map((blog, index) => (
-          <div key={index} className="col-4">
+        {travels.map((travel, index) => (
+          <div key={index} className="col-6">
             <Card className="mt-3">
               <CardHeader
                 avatar={
                   <Avatar
                     aria-label="travel"
                     alt="travelImage"
-                    src={"http://localhost:8080" + blog.image.contentUrl}
+                    src={"http://localhost:8080" + travel.image}
                   />
                 }
                 action={
@@ -51,18 +50,18 @@ export default ({ homeViewModel }) => {
                     <MoreVertIcon />
                   </IconButton>
                 }
-                title={blog.headline}
-                subheader="September 14, 2016"
+                title={travel.name}
+                subheader={travel.date}
               />
               <Link to="/steps">
                 <CardMedia
                   className={classes.media}
-                  image={"http://localhost:8080" + blog.image.contentUrl}
+                  image={"http://localhost:8080" + travel.image}
                 />
               </Link>
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {blog.articleBody}
+                  {travel.description}
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>

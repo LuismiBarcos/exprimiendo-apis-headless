@@ -34,3 +34,27 @@ export const getUsersQuery = gql`
     }
   }
 `;
+
+export const getStructuredContentsByContentStructureQuery = gql`
+  query contentStructures($siteKey: String!){
+    contentStructures(siteKey: $siteKey, filter: "id eq '42107'") {
+      items {
+        id
+        structuredContents {
+          items {
+            title
+            contentFields {
+              label
+              contentFieldValue {
+                data
+                image {
+                  contentUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
