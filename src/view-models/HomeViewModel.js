@@ -53,7 +53,7 @@ export default class HomeViewModel {
       travel.id = travelStructuredContent.id;
       travel.image = getData("Image").image.contentUrl;
       travel.name = getData("Name").data;
-      travel.date = getData("Date").data;
+      travel.date = new Date(getData("Date").data).toDateString();
       travel.description = getData("Description").data;
 
       return travel;

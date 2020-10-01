@@ -39,7 +39,6 @@ export default withRouter(
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
     const [steps, setSteps] = useState([]);
-    // const stepsViewModel = new StepsViewModel();
 
     useEffect(() => {
       debugger;
@@ -64,7 +63,9 @@ export default withRouter(
           <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => (
               <Step key={index}>
-                <StepLabel>{step.city}</StepLabel>
+                <StepLabel>
+                  <Typography variant="h5">{step.city}</Typography>
+                </StepLabel>
                 <StepContent>
                   <div>
                     <div>
