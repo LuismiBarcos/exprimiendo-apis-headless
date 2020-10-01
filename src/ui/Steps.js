@@ -8,7 +8,6 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import StepsViewModel from "../view-models/StepsViewModel";
-import { Card, CardContent, CardMedia } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 0,
     paddingTop: "56.25%", // 16:9
-    backgroundSize: "content"
   },
   button: {
     marginTop: theme.spacing(1),
@@ -62,21 +60,20 @@ export default () => {
               <StepLabel>{step.headline}</StepLabel>
               <StepContent>
                 <div>
-                  <Card className="mt-3">
-                    <CardMedia
-                      className={classes.media}
-                      image={"http://localhost:8080" + step.image.contentUrl}
+                  <div>
+                    <img
+                      className="img-fluid"
+                      alt=""
+                      src={"http://localhost:8080" + step.image.contentUrl}
                     />
-                    <CardContent>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        {step.articleBody}
-                      </Typography>
-                    </CardContent>
-                  </Card>
+                  </div>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {step.articleBody}
+                  </Typography>
                 </div>
                 <div className={classes.actionsContainer}>
                   <div>
