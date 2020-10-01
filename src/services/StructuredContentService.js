@@ -1,5 +1,6 @@
 import {
   client,
+  getStructuredContentByIdQuery,
   getStructuredContentsByContentStructureQuery,
 } from "../api/Client";
 
@@ -8,35 +9,40 @@ export default class StructuredContentService {
    * Get structured contents depending on its structured key
    * @param {Promise<import("@apollo/client").ApolloQueryResult>} siteKey key of a specific site
    */
-  getStructuredContentsByContentStructure(siteKey) {
+  async getStructuredContentsByContentStructure(siteKey) {
     return client
       .query({
         query: getStructuredContentsByContentStructureQuery,
         variables: {
-          siteKey: siteKey,
+          siteKey,
         },
       })
       .then((response) => response.data.contentStructures.items[0]);
   }
 
   /**
-   * Map a structured content with the information of a travel to an more friendly travel object
-   * @param {Object} travelStructuredContent Structured content that contains the information of a travel
-   * @returns {Object} A travel
+   * Get a structured content by its ID
+   * @param {Long} structuredContentId
    */
-  travelsMapper(travelStructuredContent) {
-    let travel = {};
-    travel.image = getData("Image").image.contentUrl;
-    travel.name = getData("Name").data;
-    travel.date = getData("Date").data;
-    travel.description = getData("Description").data;
-    debugger;
-    return travel;
+  async getStructuredContentById(structuredContentId) {
+    return client
+      .query({
+        query: getStructuredContentByIdQuery,
+        variables: {
+          structuredContentId
+        },
+      })
+      .then((response) => response.data.structuredContent);
+  }
 
-    function getData(type) {
-      return travelStructuredContent.contentFields.filter(
-        (item) => item.label === type
-      )[0].contentFieldValue;
-    }
+  /**
+   * Extract value of a web content content fields depending on its label
+   * @param {any} webContentField A content field of a Liferay Web Content
+   * @param {String} type The label of the content field
+   */
+  getWebContentData(webContentField, type) {
+    return webContentField.contentFields.filter(
+      (item) => item.label === type
+    )[0].contentFieldValue;
   }
 }

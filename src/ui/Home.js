@@ -2,10 +2,7 @@ import React from "react";
 import UsersList from "../components/UsersList";
 import TravelsList from "../components/TravelsList";
 
-import HomeViewModel from "../view-models/HomeViewModel";
-
-export default () => {
-  const homeViewModel = new HomeViewModel();
+export default ({homeViewModel}) => {
   return (
     <div>
       <div className="container-fluid">

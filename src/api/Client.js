@@ -36,12 +36,12 @@ export const getUsersQuery = gql`
 `;
 
 export const getStructuredContentsByContentStructureQuery = gql`
-  query contentStructures($siteKey: String!){
+  query contentStructures($siteKey: String!) {
     contentStructures(siteKey: $siteKey, filter: "id eq '42107'") {
       items {
-        id
         structuredContents {
           items {
+            id
             title
             contentFields {
               label
@@ -49,6 +49,36 @@ export const getStructuredContentsByContentStructureQuery = gql`
                 data
                 image {
                   contentUrl
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const getStructuredContentByIdQuery = gql`
+  query structuredContent($structuredContentId: Long!) {
+    structuredContent(structuredContentId: $structuredContentId) {
+      title
+      contentFields {
+        label
+        contentFieldValue {
+          structuredContentLink {
+            id
+            title
+            graphQLNode {
+              ... on StructuredContent {
+                contentFields {
+                  label
+                  contentFieldValue {
+                    data
+                    image {
+                      contentUrl
+                    }
+                  }
                 }
               }
             }

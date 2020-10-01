@@ -43,9 +43,26 @@ export default class HomeViewModel {
       .then((response) => {
         setTravels(
           response.structuredContents.items.map((structuredContent) =>
-            this.structuredContentService.travelsMapper(structuredContent)
+            travelsMapper(structuredContent)
           )
         );
       });
+
+    function travelsMapper(travelStructuredContent) {
+      let travel = {};
+      travel.id = travelStructuredContent.id;
+      travel.image = getData("Image").image.contentUrl;
+      travel.name = getData("Name").data;
+      travel.date = getData("Date").data;
+      travel.description = getData("Description").data;
+
+      return travel;
+
+      function getData(type) {
+        return travelStructuredContent.contentFields.filter(
+          (item) => item.label === type
+        )[0].contentFieldValue;
+      }
+    }
   }
 }

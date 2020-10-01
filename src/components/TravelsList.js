@@ -53,7 +53,7 @@ export default ({ homeViewModel }) => {
                 title={travel.name}
                 subheader={travel.date}
               />
-              <Link to="/steps">
+              <Link to={`${travel.id}/steps`}>
                 <CardMedia
                   className={classes.media}
                   image={"http://localhost:8080" + travel.image}
