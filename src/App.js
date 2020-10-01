@@ -2,11 +2,13 @@ import React from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Home from "./ui/Home";
 import Steps from "./ui/Steps";
+import AppBar from "./components/AppBar";
 
 export default function App() {
   return (
     <Router>
       <div className="App">
+      <AppBar />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/steps" exact component={Steps} />
