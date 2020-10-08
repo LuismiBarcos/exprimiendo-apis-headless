@@ -37,7 +37,7 @@ export const getUsersQuery = gql`
 
 export const getStructuredContentsByContentStructureQuery = gql`
   query contentStructures($siteKey: String!) {
-    contentStructures(siteKey: $siteKey, filter: "id eq '42107'") {
+    contentStructures(siteKey: $siteKey, filter: "name eq 'Travel'") {
       items {
         structuredContents {
           items {
