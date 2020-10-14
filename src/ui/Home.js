@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Button,
   Fab,
@@ -25,13 +25,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   startingDate: {
-    marginTop: theme.spacing(1)
+    marginTop: theme.spacing(1),
   },
 }));
 
 export default ({ homeViewModel }) => {
   const classes = useStyles();
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const tripName = useRef(null);
+  const tripDescription = useRef(null);
+  const tripStartingDate = useRef(null);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -65,38 +68,53 @@ export default ({ homeViewModel }) => {
           open={isModalOpen}
           ui={
             <>
-              <Typography variant="h3">Create a travel</Typography>
+              <Typography variant="h3">Create a trip</Typography>
               <div className="mt-3">
                 <TextField
                   id="standard-basic"
-                  label="Travel name"
+                  label="Trip name"
                   variant="outlined"
+                  ref={tripName}
                   fullWidth
                 />
               </div>
               <div className="mt-4">
                 <TextField
                   id="standard-textarea"
-                  label="Travel description"
+                  label="Trip description"
                   placeholder="description"
                   rows="4"
                   rowsMax="4"
                   variant="outlined"
+                  ref={tripDescription}
                   multiline
                   fullWidth
                 />
               </div>
               <TextField
                 id="date"
+                className={classes.startingDate}
                 label="Starting date"
                 type="date"
-                className={classes.startingDate}
+                ref={tripStartingDate}
                 InputLabelProps={{
                   shrink: true,
                 }}
               />
               <div className={classes.createButton}>
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    homeViewModel
+                      .createTrip(
+                        tripName.current.lastChild.firstChild.value,
+                        tripDescription.current.lastChild.firstChild.value,
+                        tripStartingDate.current.lastChild.firstChild.value
+                      )
+                      .then(handleModalClose);
+                  }}
+                >
                   Create
                 </Button>
               </div>

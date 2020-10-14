@@ -1,11 +1,13 @@
 import BlogsService from "../services/BlogsService";
 import UsersService from "../services/UsersService";
 import StructuredContentService from "../services/StructuredContentService";
+import TripService from "../services/TripService";
 
 export default class HomeViewModel {
   constructor() {
     this.blogsService = new BlogsService();
     this.usersService = new UsersService();
+    this.tripService = new TripService();
     this.structuredContentService = new StructuredContentService();
   }
 
@@ -67,5 +69,13 @@ export default class HomeViewModel {
         )[0].contentFieldValue;
       }
     }
+  }
+
+  async createTrip(name, description, startingDate) {
+    return this.tripService.createTrip(
+      name,
+      description,
+      new Date(startingDate)
+    );
   }
 }

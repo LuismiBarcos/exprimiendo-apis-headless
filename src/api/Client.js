@@ -88,3 +88,22 @@ export const getStructuredContentByIdQuery = gql`
     }
   }
 `;
+
+export const createTripQuery = gql`
+  mutation createTrip(
+    $name: String!
+    $description: String!
+    $startingDate: Date!
+  ) {
+    createTrip(
+      trip: {
+        name: $name
+        description: $description
+        startingDate: $startingDate
+      }
+    ) {
+      name
+      description
+    }
+  }
+`;
