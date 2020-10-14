@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -29,8 +29,8 @@ export default ({ homeViewModel }) => {
   const [travels, setTravels] = useState([]);
 
   useEffect(() => {
-    homeViewModel.getTravels(setTravels)
-  }, [homeViewModel])
+    homeViewModel.getTravels(setTravels);
+  }, [homeViewModel]);
   return (
     <div className="container-fluid">
       <div className="row">
@@ -46,8 +46,13 @@ export default ({ homeViewModel }) => {
                   />
                 }
                 action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
+                  <IconButton
+                    aria-label="settings"
+                    onClick={() => {
+                      homeViewModel.deleteTrip(travel.id);
+                    }}
+                  >
+                    <DeleteIcon />
                   </IconButton>
                 }
                 title={travel.name}

@@ -122,3 +122,9 @@ export const createTripQuery = gql`
     }
   }
 `;
+
+export const deleteTripQuery = gql`
+  mutation deleteTrip($tripId: Long!) {
+    deleteTrip(tripId: $tripId)
+  }
+`;

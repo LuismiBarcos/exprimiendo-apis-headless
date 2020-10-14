@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import {
   Button,
   Fab,
-  IconButton,
   makeStyles,
   TextField,
   Typography,
@@ -12,7 +11,6 @@ import AddIcon from "@material-ui/icons/Add";
 import UsersList from "../components/UsersList";
 import TravelsList from "../components/TravelsList";
 import Modal from "../components/Modal";
-import { PhotoCamera } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   fab: {

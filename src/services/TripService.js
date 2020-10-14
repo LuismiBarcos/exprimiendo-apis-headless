@@ -1,13 +1,20 @@
-import { client, createTripQuery, getTripsQuery } from "../api/Client";
+import {
+  client,
+  createTripQuery,
+  getTripsQuery,
+  deleteTripQuery,
+} from "../api/Client";
 
 export default class TripService {
   /**
    * Get the trips registred in Liferay
    */
-  getTrips() {
-    return client.query({
-      query: getTripsQuery,
-    }).then((response) => response.data.trips);
+  async getTrips() {
+    return client
+      .query({
+        query: getTripsQuery,
+      })
+      .then((response) => response.data.trips);
   }
 
   /**
@@ -25,7 +32,20 @@ export default class TripService {
         name,
         description,
         startingDate,
-        image
+        image,
+      },
+    });
+  }
+
+  /**
+   * Delete a trip given its id.
+   * @param {Long} tripId Id of the trip to delete
+   */
+  deleteTrip(tripId) {
+    return client.mutate({
+      mutation: deleteTripQuery,
+      variables: {
+        tripId,
       },
     });
   }
