@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import {
   Button,
   Fab,
+  IconButton,
   makeStyles,
   TextField,
   Typography,
@@ -11,6 +12,7 @@ import AddIcon from "@material-ui/icons/Add";
 import UsersList from "../components/UsersList";
 import TravelsList from "../components/TravelsList";
 import Modal from "../components/Modal";
+import { PhotoCamera } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -27,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
   startingDate: {
     marginTop: theme.spacing(1),
   },
+  input: {
+    display: "none",
+  },
 }));
 
 export default ({ homeViewModel }) => {
@@ -35,6 +40,7 @@ export default ({ homeViewModel }) => {
   const tripName = useRef(null);
   const tripDescription = useRef(null);
   const tripStartingDate = useRef(null);
+  const tripImage = useRef(null);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -91,16 +97,30 @@ export default ({ homeViewModel }) => {
                   fullWidth
                 />
               </div>
-              <TextField
-                id="date"
-                className={classes.startingDate}
-                label="Starting date"
-                type="date"
-                ref={tripStartingDate}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+              <div>
+                <TextField
+                  id="date"
+                  className={classes.startingDate}
+                  label="Starting date"
+                  type="date"
+                  ref={tripStartingDate}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <input
+                  accept="image/*"
+                  className={classes.input}
+                  id="contained-button-file"
+                  type="file"
+                  ref={tripImage}
+                />
+                <label htmlFor="contained-button-file">
+                  <Button variant="contained" color="primary" component="span">
+                    Upload
+                  </Button>
+                </label>
+              </div>
               <div className={classes.createButton}>
                 <Button
                   variant="contained"
@@ -110,7 +130,8 @@ export default ({ homeViewModel }) => {
                       .createTrip(
                         tripName.current.lastChild.firstChild.value,
                         tripDescription.current.lastChild.firstChild.value,
-                        tripStartingDate.current.lastChild.firstChild.value
+                        tripStartingDate.current.lastChild.firstChild.value,
+                        tripImage.current.files[0]
                       )
                       .then(handleModalClose);
                   }}

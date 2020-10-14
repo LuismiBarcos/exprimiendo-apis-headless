@@ -107,12 +107,14 @@ export const createTripQuery = gql`
     $name: String!
     $description: String!
     $startingDate: Date!
+    $image: String!
   ) {
     createTrip(
       trip: {
         name: $name
         description: $description
         startingDate: $startingDate
+        image: $image
       }
     ) {
       name

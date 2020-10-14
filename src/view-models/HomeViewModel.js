@@ -43,11 +43,19 @@ export default class HomeViewModel {
     });
   }
 
-  async createTrip(name, description, startingDate) {
+  async createTrip(name, description, startingDate, image) {
     return this.tripService.createTrip(
       name,
       description,
-      new Date(startingDate)
+      !!startingDate ? new Date(startingDate) : new Date(),
+      !!image ? await toBase64(image) : ""
     );
   }
 }
+
+const toBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = error => reject(error);
+});

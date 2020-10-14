@@ -15,15 +15,17 @@ export default class TripService {
    * @param {String} name Name of the trip
    * @param {String} description Description of the trip
    * @param {Date} startingDate Date when the trip begin
+   * @param {String} image Trip image in base64
    * @return {Promise<FetchResult<T>>}
    */
-  createTrip(name, description, startingDate) {
+  createTrip(name, description, startingDate, image) {
     return client.mutate({
       mutation: createTripQuery,
       variables: {
         name,
         description,
         startingDate,
+        image
       },
     });
   }
