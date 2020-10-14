@@ -1,26 +1,10 @@
-import BlogsService from "../services/BlogsService";
 import UsersService from "../services/UsersService";
-import StructuredContentService from "../services/StructuredContentService";
 import TripService from "../services/TripService";
 
 export default class HomeViewModel {
   constructor() {
-    this.blogsService = new BlogsService();
     this.usersService = new UsersService();
     this.tripService = new TripService();
-    this.structuredContentService = new StructuredContentService();
-  }
-
-  /**
-   * Get blogs entries of the default site
-   * @param {Function} setBlogs Callback to set the blogs
-   */
-  async getBlogPosts(setBlogs) {
-    //TODO: Get siteId or put this as a constant with the siteKey
-    const siteId = "20121";
-    this.blogsService.getBlogPosts(siteId).then((response) => {
-      setBlogs(response.data.blogPostings.items);
-    });
   }
 
   /**
@@ -51,12 +35,18 @@ export default class HomeViewModel {
    * @param {File} image Image file
    */
   async createTrip(name, description, startingDate, image) {
-    return this.tripService.createTrip(
-      name,
-      description,
-      !!startingDate ? new Date(startingDate) : new Date(),
-      !!image ? await toBase64(image) : ""
-    );
+    return this.tripService
+      .createTrip(
+        name,
+        description,
+        !!startingDate ? new Date(startingDate) : new Date(),
+        !!image ? await toBase64(image) : ""
+      )
+      .then(() => {
+        this.tripService.clearCache().then(() => {
+          window.location.replace(`/`);
+        });
+      });
   }
 
   /**
@@ -64,7 +54,11 @@ export default class HomeViewModel {
    * @param {Long} tripId Id of the trip to delete
    */
   async deleteTrip(tripId) {
-    return this.tripService.deleteTrip(tripId);
+    return this.tripService.deleteTrip(tripId).then(() => {
+      this.tripService.clearCache().then(() => {
+        window.location.replace(`/`);
+      });
+    });
   }
 }
 

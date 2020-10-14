@@ -49,4 +49,11 @@ export default class TripService {
       },
     });
   }
+
+  /**
+   * Clear apollo cache
+   */
+  clearCache() {
+    return client.clearStore();
+  }
 }
