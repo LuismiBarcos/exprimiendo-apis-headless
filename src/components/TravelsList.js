@@ -51,7 +51,7 @@ export default ({ homeViewModel }) => {
                   </IconButton>
                 }
                 title={travel.name}
-                subheader={travel.date}
+                subheader={travel.startingDate}
               />
               <Link to={`${travel.id}/steps`}>
                 <CardMedia

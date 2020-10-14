@@ -38,37 +38,9 @@ export default class HomeViewModel {
    * @param {Function} setTravels Callback to set the travels
    */
   async getTravels(setTravels) {
-    //TODO: Get siteId or put this as a constant with the siteKey
-    const siteId = "20121";
-    this.structuredContentService
-      .getStructuredContentsByContentStructure(siteId)
-      .then((response) => {
-        setTravels(
-          response.structuredContents.items.map((structuredContent) =>
-            travelsMapper(structuredContent)
-          )
-        );
-      })
-      .catch(() => {
-        console.error("Something went wrong!");
-      });
-
-    function travelsMapper(travelStructuredContent) {
-      let travel = {};
-      travel.id = travelStructuredContent.id;
-      travel.image = getData("Image").image.contentUrl;
-      travel.name = getData("Name").data;
-      travel.date = new Date(getData("Date").data).toDateString();
-      travel.description = getData("Description").data;
-
-      return travel;
-
-      function getData(type) {
-        return travelStructuredContent.contentFields.filter(
-          (item) => item.label === type
-        )[0].contentFieldValue;
-      }
-    }
+    this.tripService.getTrips().then((trips) => {
+      setTravels(trips.items);
+    });
   }
 
   async createTrip(name, description, startingDate) {

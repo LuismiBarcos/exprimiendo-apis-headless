@@ -89,6 +89,19 @@ export const getStructuredContentByIdQuery = gql`
   }
 `;
 
+export const getTripsQuery = gql`
+  query trips {
+    trips {
+      items {
+        id
+        name
+        description
+        startingDate
+      }
+    }
+  }
+`;
+
 export const createTripQuery = gql`
   mutation createTrip(
     $name: String!
