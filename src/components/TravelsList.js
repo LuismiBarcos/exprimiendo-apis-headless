@@ -42,7 +42,7 @@ export default ({ homeViewModel }) => {
                   <Avatar
                     aria-label="travel"
                     alt="travelImage"
-                    src={"http://localhost:8080" + travel.image}
+                    src={travel.image}
                   />
                 }
                 action={
@@ -61,7 +61,7 @@ export default ({ homeViewModel }) => {
               <Link to={`${travel.id}/steps`}>
                 <CardMedia
                   className={classes.media}
-                  image={"http://localhost:8080" + travel.image}
+                  image={travel.image}
                 />
               </Link>
               <CardContent>

@@ -97,6 +97,7 @@ export const getTripsQuery = gql`
         name
         description
         startingDate
+        image
       }
     }
   }
