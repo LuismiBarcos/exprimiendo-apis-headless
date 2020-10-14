@@ -46,6 +46,9 @@ export default class HomeViewModel {
             travelsMapper(structuredContent)
           )
         );
+      })
+      .catch(() => {
+        console.error("Something went wrong!");
       });
 
     function travelsMapper(travelStructuredContent) {
