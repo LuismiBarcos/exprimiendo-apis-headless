@@ -53,7 +53,7 @@ export default ({ homeViewModel }) => {
                     >
                       {user.emailAddress}
                     </Typography>
-                    {" - " + user.jobTitle}
+                    {" - " + user.biography}
                   </React.Fragment>
                 }
               />

@@ -29,7 +29,7 @@ export const getUsersQuery = gql`
         name
         emailAddress
         image
-        jobTitle
+        biography
       }
     }
   }
