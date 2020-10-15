@@ -129,3 +129,46 @@ export const deleteTripQuery = gql`
     deleteTrip(tripId: $tripId)
   }
 `;
+
+export const getTripStagesQuery = gql`
+  query tripStages($tripId: Long!) {
+    tripStages(tripId: $tripId) {
+      items {
+        id
+        name
+        place
+        description
+        image
+      }
+    }
+  }
+`;
+
+export const createTripStageQuery = gql`
+  mutation createTripStage(
+    $tripId: Long!
+    $name: String!
+    $description: String!
+    $place: String!
+    $image: String!
+  ) {
+    createTripStage(
+      tripId: $tripId
+      stage: {
+        name: $name
+        description: $description
+        place: $place
+        image: $image
+      }
+    ) {
+      id
+      name
+    }
+  }
+`;
+
+export const deleteTripStageQuery = gql`
+  mutation deleteStage($stageId: Long!) {
+    deleteStage(stageId: $stageId)
+  }
+`;

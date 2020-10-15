@@ -1,44 +1,63 @@
-import StructuredContentService from "../services/StructuredContentService";
+import StageService from "../services/StageService";
 
 export default class StepsViewModel {
   constructor() {
-    this.structuredContentService = new StructuredContentService();
+    this.stageService = new StageService();
   }
 
   /**
    * Get blogs entries of the default site
-   * @param {Function} setSteps Callback to set the blogs
-   * @param {Long} travelId Id of the travel
+   * @param {Function} setStages Callback to set the blogs
+   * @param {Long} tripId Id of the travel
    */
-  async getTravelSteps(setSteps, travelId) {
-    this.structuredContentService
-      .getStructuredContentById(travelId)
-      .then((travel) => {
-        setSteps(
-          travel.contentFields
-            .filter((step) => step.label === "Web Content")
-            .map(
-              (step) => step.contentFieldValue.structuredContentLink.graphQLNode
-            )
-            .map((stepContentField) =>
-              stepMapper(stepContentField, this.structuredContentService)
-            )
-        );
+  async getTripStages(setStages, tripId) {
+    this.stageService.getTripStages(tripId).then((tripStages) => {
+      setStages(tripStages.items);
+    });
+  }
+
+  /**
+   * Create a stage in a trip
+   * @param {Long} tripId Id of the trip
+   * @param {String} name Name of the stage
+   * @param {String} description Description of the stage
+   * @param {String} place Name of the stage
+   * @param {String} image Base64 of an descriptive image
+   */
+  async createTripStage(tripId, name, description, place, image) {
+    return this.stageService
+      .createTripStage(
+        +tripId,
+        name,
+        description,
+        place,
+        !!image ? await toBase64(image) : ""
+      )
+      .then(() => {
+        this.stageService.clearCache().then(() => {
+          window.location.replace(`/${tripId}/steps`);
+        });
       });
+  }
 
-    function stepMapper(stepContentField, service) {
-      let step = {};
-      step.image = service.getWebContentData(
-        stepContentField,
-        "Image"
-      ).image.contentUrl;
-      step.city = service.getWebContentData(stepContentField, "City").data;
-      step.description = service.getWebContentData(
-        stepContentField,
-        "Description"
-      ).data;
-
-      return step;
-    }
+  /**
+   * Delete a stage of a trip
+   * @param {Long} stageId
+   * @param {Long} tripId
+   */
+  async deleteTripStage(stageId, tripId) {
+    return this.stageService.deleteTripStage(stageId).then(() => {
+      this.stageService.clearCache().then(() => {
+        window.location.replace(`/${tripId}/steps`);
+      })
+    });
   }
 }
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
