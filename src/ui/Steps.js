@@ -37,6 +37,19 @@ const useStyles = makeStyles((theme) => ({
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
+  place: {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+  },
+  createButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: theme.spacing(3),
+  },
   input: {
     display: "none",
   },
@@ -53,6 +66,7 @@ export default withRouter(
     const [activeStep, setActiveStep] = useState(0);
     const [stages, setStages] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [stageImageName, setStageImageName] = useState("");
     const stageName = useRef(null);
     const stageDescription = useRef(null);
     const stagePlace = useRef(null);
@@ -94,11 +108,7 @@ export default withRouter(
                 <StepContent>
                   <div>
                     <div>
-                      <img
-                        className="img-fluid"
-                        alt=""
-                        src={step.image}
-                      />
+                      <img className="img-fluid" alt="" src={step.image} />
                     </div>
                     <Typography
                       variant="body2"
@@ -185,7 +195,7 @@ export default withRouter(
                     fullWidth
                   />
                 </div>
-                <div>
+                <div className={classes.place}>
                   <TextField
                     id="place"
                     className={classes.startingDate}
@@ -193,22 +203,28 @@ export default withRouter(
                     ref={stagePlace}
                     variant="outlined"
                   />
-                  <input
-                    accept="image/*"
-                    className={classes.input}
-                    id="contained-button-file"
-                    type="file"
-                    ref={stageImage}
-                  />
-                  <label htmlFor="contained-button-file">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      component="span"
-                    >
-                      Upload
-                    </Button>
-                  </label>
+                  <div>
+                    <span className="mr-2">{stageImageName}</span>
+                    <input
+                      accept="image/*"
+                      className={classes.input}
+                      id="contained-button-file"
+                      type="file"
+                      ref={stageImage}
+                      onChange={(e) => {
+                        setStageImageName(e.currentTarget.files[0].name);
+                      }}
+                    />
+                    <label htmlFor="contained-button-file">
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        component="span"
+                      >
+                        Upload
+                      </Button>
+                    </label>
+                  </div>
                 </div>
                 <div className={classes.createButton}>
                   <Button
