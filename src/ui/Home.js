@@ -25,7 +25,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   startingDate: {
-    marginTop: theme.spacing(1),
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(3),
+  },
+  test: {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "space-between",
+    marginTop: theme.spacing(3),
   },
   input: {
     display: "none",
@@ -35,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default ({ homeViewModel }) => {
   const classes = useStyles();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [tripImageName, setTripImageName] = useState("");
   const tripName = useRef(null);
   const tripDescription = useRef(null);
   const tripStartingDate = useRef(null);
@@ -95,29 +105,39 @@ export default ({ homeViewModel }) => {
                   fullWidth
                 />
               </div>
-              <div>
+              <div className={classes.startingDate}>
                 <TextField
                   id="date"
-                  className={classes.startingDate}
                   label="Starting date"
                   type="date"
                   ref={tripStartingDate}
+                  variant="outlined"
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
-                <input
-                  accept="image/*"
-                  className={classes.input}
-                  id="contained-button-file"
-                  type="file"
-                  ref={tripImage}
-                />
-                <label htmlFor="contained-button-file">
-                  <Button variant="contained" color="primary" component="span">
-                    Upload
-                  </Button>
-                </label>
+                <div>
+                  <span className="mr-2">{tripImageName}</span>
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    id="contained-button-file"
+                    type="file"
+                    ref={tripImage}
+                    onChange={(e) => {
+                      setTripImageName(e.currentTarget.files[0].name);
+                    }}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      component="span"
+                    >
+                      Upload
+                    </Button>
+                  </label>
+                </div>
               </div>
               <div className={classes.createButton}>
                 <Button
