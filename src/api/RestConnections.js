@@ -1,8 +1,9 @@
 export default {
-    doApiCall,
-    createHeadersBasicAuthorization,
-    createHeadersWithoutAuthorization,
-}
+  doApiCall,
+  createHeadersBasicAuthorization,
+  createHeadersWithoutAuthorization,
+  createHeadersOauthAuthorization,
+};
 
 /**
  * Do the API call to a especific url with specific headers and method
@@ -11,17 +12,16 @@ export default {
  * @param  {...any} urlStrings Url string in order to build the url
  * @returns {Promise<Response>} Response of the API call
  */
-async function doApiCall(method, headers, url) {
-    try {
-        return await fetch(url, {
-            method,
-            headers,
-            mode: 'cors'
-        });
-    }
-    catch (err) {
-        console.log("Request failed ", err);
-    }
+async function doApiCall(method, headers, url, body = {}) {
+  try {
+    return await fetch(url, {
+      method,
+      headers,
+      mode: "cors",
+    });
+  } catch (err) {
+    console.log("Request failed ", err);
+  }
 }
 
 /**
@@ -29,9 +29,9 @@ async function doApiCall(method, headers, url) {
  * @returns {Headers} Headers for the request
  */
 function createHeadersWithoutAuthorization() {
-    const headers = new Headers();
-    headers.set('Content-Type', 'application/json');
-    return headers;
+  const headers = new Headers();
+  headers.set("Content-Type", "application/json");
+  return headers;
 }
 
 /**
@@ -40,7 +40,13 @@ function createHeadersWithoutAuthorization() {
  * @returns {Headers} Headers for the request
  */
 function createHeadersBasicAuthorization(basicAuthToken) {
-    const headers = createHeadersWithoutAuthorization();
-    headers.set('Authorization', 'Basic ' + basicAuthToken);
-    return headers;
+  const headers = createHeadersWithoutAuthorization();
+  headers.set("Authorization", "Basic " + basicAuthToken);
+  return headers;
+}
+
+function createHeadersOauthAuthorization(token) {
+  const headers = new Headers();
+  headers.set("Content-Type", "application/x-www-form-urlencoded");
+  return headers;
 }
