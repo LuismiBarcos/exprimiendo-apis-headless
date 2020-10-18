@@ -4,8 +4,11 @@ export default class LoginViewModel {
   constructor() {
     this.loginService = new LoginService();
   }
-  login(username, password) {
-    return this.loginService.login(username, password);
+  async login(username, password) {
+    return this.loginService
+      .login(username, password)
+      .then((loginSuccess) => loginSuccess)
+      .catch((loginSuccess) => loginSuccess);
   }
 
   logout() {

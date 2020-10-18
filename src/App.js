@@ -18,7 +18,7 @@ export default function App() {
   return (
     <Router>
       <div className="App">
-        <AppBar viewModel={appBarViewModel} />
+        {!!loginViewModel.isLogin() && <AppBar viewModel={appBarViewModel} />}
         <Switch>
           <Route path="/signin" exact>
             <Login loginViewModel={loginViewModel} />

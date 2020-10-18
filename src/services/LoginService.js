@@ -8,17 +8,19 @@ const LOCAL_STORAGE_ITEMS = {
 
 export default class LoginService {
   async login(username, password) {
-    requestOauthToken(username, password).then((data) => {
-      if (data.access_token && data.refresh_token) {
-        localStorage.setItem(LOCAL_STORAGE_ITEMS.token, data.access_token);
-        localStorage.setItem(
-          LOCAL_STORAGE_ITEMS.refreshToken,
-          data.refresh_token
-        );
-        window.location.replace(`/`);
-        return true
-      }
-      return false;
+    return new Promise((resolve, reject) => {
+      requestOauthToken(username, password).then((data) => {
+        if (data.access_token && data.refresh_token) {
+          localStorage.setItem(LOCAL_STORAGE_ITEMS.token, data.access_token);
+          localStorage.setItem(
+            LOCAL_STORAGE_ITEMS.refreshToken,
+            data.refresh_token
+          );
+          window.location.replace(`/`);
+          resolve(true);
+        }
+        reject(false);
+      });
     });
   }
 
