@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ homeViewModel }) => {
+export default ({ viewModel: homeViewModel }) => {
   const classes = useStyles();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tripImageName, setTripImageName] = useState("");

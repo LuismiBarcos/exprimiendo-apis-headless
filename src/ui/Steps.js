@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default withRouter(
   ({
-    stepsViewModel,
+    viewModel: stepsViewModel,
     match: {
       params: { travelId },
     },
