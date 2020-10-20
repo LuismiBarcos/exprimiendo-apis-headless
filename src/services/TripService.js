@@ -3,6 +3,7 @@ import {
   createTripQuery,
   getTripsQuery,
   deleteTripQuery,
+  getFilteredTrips,
 } from "../api/Client";
 
 export default class TripService {
@@ -48,6 +49,10 @@ export default class TripService {
         tripId,
       },
     });
+  }
+
+  async filterTrips(filter) {
+    return getFilteredTrips(filter).then(response => response.data.trips);
   }
 
   /**

@@ -1,11 +1,40 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import { GRAPHQL_URI } from "./ApiConstans";
 
-export const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: GRAPHQL_URI,
-  cache: new InMemoryCache(),
-  headers: { Authorization: "Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0" },
 });
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Basic dGVzdEBsaWZlcmF5LmNvbTp0ZXN0` : "",
+    },
+  };
+});
+
+export const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
+export const getFilteredTrips = (filter) => {
+  filter = `name eq '${filter}'`;
+  return client.query({
+    query: getFilteredTripsQuery,
+    variables: {
+      filter,
+    },
+  });
+}
 
 export const getBlogsQuery = gql`
   query blogPostings($siteKey: String!) {
@@ -17,6 +46,20 @@ export const getBlogsQuery = gql`
         image {
           contentUrl
         }
+      }
+    }
+  }
+`;
+
+export const getFilteredTripsQuery = gql`
+  query trips($filter: String!) {
+    trips(filter: $filter) {
+      items {
+        id
+        name
+        description
+        startingDate
+        image
       }
     }
   }

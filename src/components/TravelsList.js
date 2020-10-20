@@ -12,7 +12,8 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import DeleteIcon from "@material-ui/icons/Delete";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+import useQueryParams from "../hooks/useQueryParams";
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -24,13 +25,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default ({ homeViewModel }) => {
+export default withRouter(({ homeViewModel, location }) => {
   const classes = useStyles();
   const [travels, setTravels] = useState([]);
 
+  const queryParams = useQueryParams(location);
+
   useEffect(() => {
-    homeViewModel.getTravels(setTravels);
-  }, [homeViewModel]);
+    const searchParam = queryParams.get("search") || "";
+    searchParam
+      ? homeViewModel.filterTrips(setTravels, searchParam)
+      : homeViewModel.getTravels(setTravels);
+  }, [homeViewModel, queryParams]);
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -59,10 +66,7 @@ export default ({ homeViewModel }) => {
                 subheader={travel.startingDate}
               />
               <Link to={`${travel.id}/steps`}>
-                <CardMedia
-                  className={classes.media}
-                  image={travel.image}
-                />
+                <CardMedia className={classes.media} image={travel.image} />
               </Link>
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
@@ -83,4 +87,4 @@ export default ({ homeViewModel }) => {
       </div>
     </div>
   );
-};
+});

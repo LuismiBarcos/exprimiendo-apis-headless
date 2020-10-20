@@ -60,6 +60,12 @@ export default class HomeViewModel {
       });
     });
   }
+
+  async filterTrips(setTrips, filter) {
+    return this.tripService.filterTrips(filter).then((trips) => {
+      setTrips(trips.items)
+    })
+  }
 }
 
 const toBase64 = (file) =>
