@@ -2,7 +2,6 @@ export default {
   doApiCall,
   createHeadersBasicAuthorization,
   createHeadersWithoutAuthorization,
-  createHeadersOauthAuthorization,
 };
 
 /**
@@ -42,11 +41,5 @@ function createHeadersWithoutAuthorization() {
 function createHeadersBasicAuthorization(basicAuthToken) {
   const headers = createHeadersWithoutAuthorization();
   headers.set("Authorization", "Basic " + basicAuthToken);
-  return headers;
-}
-
-function createHeadersOauthAuthorization(token) {
-  const headers = new Headers();
-  headers.set("Content-Type", "application/x-www-form-urlencoded");
   return headers;
 }

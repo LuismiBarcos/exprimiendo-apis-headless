@@ -1,21 +1,23 @@
 import * as apiConstans from "../api/ApiConstans";
 import restConnections from "../api/RestConnections";
-
-const LOCAL_STORAGE_ITEMS = {
-  token: "token",
-  refreshToken: "refreshtoken",
-};
+import AuthorizationService from "../api/AuthorizationService";
 
 export default class LoginService {
+
+  /**
+   * Login in the app. Return true if login is correct or false in other case
+   * @param {String} username
+   * @param {String} password
+   */
   async login(username, password) {
+    const basicAuthToken = AuthorizationService.createBasicAuthorizationToken(
+      username,
+      password
+    );
     return new Promise((resolve, reject) => {
-      requestOauthToken(username, password).then((data) => {
-        if (data.access_token && data.refresh_token) {
-          localStorage.setItem(LOCAL_STORAGE_ITEMS.token, data.access_token);
-          localStorage.setItem(
-            LOCAL_STORAGE_ITEMS.refreshToken,
-            data.refresh_token
-          );
+      checkLoginCredentials(basicAuthToken).then((status) => {
+        if (status === 200) {
+          localStorage.setItem("token", basicAuthToken);
           window.location.replace(`/`);
           resolve(true);
         }
@@ -24,28 +26,27 @@ export default class LoginService {
     });
   }
 
+  /**
+   * Logout of the application
+   */
   logout() {
-    localStorage.removeItem(LOCAL_STORAGE_ITEMS.token);
-    localStorage.removeItem(LOCAL_STORAGE_ITEMS.refreshToken);
+    localStorage.removeItem("token");
     window.location.replace(`/`);
   }
 
+  /**
+   * Check if the user is logged
+   */
   isLogin() {
-    console.log("isLogin");
-    console.log(!!localStorage.getItem(LOCAL_STORAGE_ITEMS.token));
-    return !!localStorage.getItem(LOCAL_STORAGE_ITEMS.token);
+    return !!localStorage.getItem("token");
   }
 }
 
-const requestOauthToken = async (username, password) =>
-  restConnections
-    .doApiCall(
-      apiConstans.METHODS.POST,
-      restConnections.createHeadersOauthAuthorization(),
-      apiConstans.createAuthTokenURL(username, password, "password")
-    )
-    .then((response) => response.json())
-    .catch((err) => {
-      console.log("Big problem");
-      console.err(err);
-    });
+const checkLoginCredentials = async (basicAuthToken) => {
+  const headers = restConnections.createHeadersBasicAuthorization(
+    basicAuthToken
+  );
+  return await restConnections
+    .doApiCall(apiConstans.METHODS.GET, headers, apiConstans.BASE_URL + "/api")
+    .then((response) => response.status);
+};
