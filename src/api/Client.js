@@ -54,8 +54,10 @@ export const getBlogsQuery = gql`
 export const getFilteredTripsQuery = gql`
   query trips($filter: String!) {
     trips(filter: $filter) {
+      actions
       items {
         id
+        actions
         name
         description
         startingDate
@@ -159,8 +161,10 @@ export const getStructuredContentByIdQuery = gql`
 export const getTripsQuery = gql`
   query trips {
     trips {
+      actions
       items {
         id
+        actions
         name
         description
         startingDate
