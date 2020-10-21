@@ -1,5 +1,3 @@
-import * as apiConstans from "../api/ApiConstans";
-import restConnections from "../api/RestConnections";
 import AuthorizationService from "../api/AuthorizationService";
 import { client, getUserAccountSitesQuery } from "../api/Client";
 
@@ -14,17 +12,7 @@ export default class LoginService {
       username,
       password
     );
-    return test(basicAuthToken);
-    // return new Promise((resolve, reject) => {
-    //   checkLoginCredentials(basicAuthToken).then((status) => {
-    //     if (status === 200) {
-    //       localStorage.setItem("token", basicAuthToken);
-    //       window.location.replace(`/`);
-    //       resolve(true);
-    //     }
-    //     reject(false);
-    //   });
-    // });
+    return checkLoginCredentials(basicAuthToken);
   }
 
   /**
@@ -43,7 +31,7 @@ export default class LoginService {
   }
 }
 
-const test = async (basicAuthToken) => {
+const checkLoginCredentials = async (basicAuthToken) => {
   localStorage.setItem("token", basicAuthToken);
   return client
     .query({
@@ -59,13 +47,4 @@ const test = async (basicAuthToken) => {
       localStorage.removeItem("token");
       return false;
     });
-};
-
-const checkLoginCredentials = async (basicAuthToken) => {
-  const headers = restConnections.createHeadersBasicAuthorization(
-    basicAuthToken
-  );
-  return await restConnections
-    .doApiCall(apiConstans.METHODS.GET, headers, apiConstans.BASE_URL + "/api")
-    .then((response) => response.status);
 };

@@ -1,6 +1,6 @@
 import StageService from "../services/StageService";
 
-export default class StepsViewModel {
+export default class StagesViewModel {
   constructor() {
     this.stageService = new StageService();
   }
@@ -8,7 +8,7 @@ export default class StepsViewModel {
   /**
    * Get blogs entries of the default site
    * @param {Function} setStages Callback to set the blogs
-   * @param {Long} tripId Id of the travel
+   * @param {Long} tripId Id of the trip
    */
   async getTripStages(setStages, tripId) {
     this.stageService.getTripStages(tripId).then((tripStages) => {
@@ -35,7 +35,7 @@ export default class StepsViewModel {
       )
       .then(() => {
         this.stageService.clearCache().then(() => {
-          window.location.replace(`/${tripId}/steps`);
+          window.location.replace(`/${tripId}/stages`);
         });
       });
   }
@@ -48,7 +48,7 @@ export default class StepsViewModel {
   async deleteTripStage(stageId, tripId) {
     return this.stageService.deleteTripStage(stageId).then(() => {
       this.stageService.clearCache().then(() => {
-        window.location.replace(`/${tripId}/steps`);
+        window.location.replace(`/${tripId}/stages`);
       })
     });
   }

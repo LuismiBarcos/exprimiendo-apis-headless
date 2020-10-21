@@ -1,4 +1,4 @@
-import { client, getUsersBySiteQuery, getUsersQuery } from "../api/Client";
+import { client, getUsersBySiteQuery } from "../api/Client";
 
 export default class UsersService {
   /**

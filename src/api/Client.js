@@ -36,21 +36,6 @@ export const getFilteredTrips = (filter) => {
   });
 };
 
-export const getBlogsQuery = gql`
-  query blogPostings($siteKey: String!) {
-    blogPostings(siteKey: $siteKey) {
-      items {
-        headline
-        alternativeHeadline
-        articleBody
-        image {
-          contentUrl
-        }
-      }
-    }
-  }
-`;
-
 export const getFilteredTripsQuery = gql`
   query trips($filter: String!) {
     trips(filter: $filter) {
@@ -62,19 +47,6 @@ export const getFilteredTripsQuery = gql`
         description
         startingDate
         image
-      }
-    }
-  }
-`;
-
-export const getUsersQuery = gql`
-  query userAccounts {
-    userAccounts {
-      items {
-        name
-        emailAddress
-        image
-        biography
       }
     }
   }
@@ -99,60 +71,6 @@ export const getUserAccountSitesQuery = gql`
       items {
         name
         id
-      }
-    }
-  }
-`;
-
-export const getStructuredContentsByContentStructureQuery = gql`
-  query contentStructures($siteKey: String!) {
-    contentStructures(siteKey: $siteKey, filter: "name eq 'Travel'") {
-      items {
-        structuredContents {
-          items {
-            id
-            title
-            contentFields {
-              label
-              contentFieldValue {
-                data
-                image {
-                  contentUrl
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-export const getStructuredContentByIdQuery = gql`
-  query structuredContent($structuredContentId: Long!) {
-    structuredContent(structuredContentId: $structuredContentId) {
-      title
-      contentFields {
-        label
-        contentFieldValue {
-          structuredContentLink {
-            id
-            title
-            graphQLNode {
-              ... on StructuredContent {
-                contentFields {
-                  label
-                  contentFieldValue {
-                    data
-                    image {
-                      contentUrl
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       }
     }
   }

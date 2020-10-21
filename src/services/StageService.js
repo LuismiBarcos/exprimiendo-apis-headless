@@ -7,7 +7,7 @@ import {
 
 export default class StructuredContentService {
   /**
-   * Get the steps of a concrete trip
+   * Get the stages of a concrete trip
    * @param {Long} tripId ID of the trip
    */
   async getTripStages(tripId) {

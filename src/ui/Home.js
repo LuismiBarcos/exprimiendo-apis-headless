@@ -1,15 +1,7 @@
-import React, { useRef, useState } from "react";
-import {
-  Button,
-  Fab,
-  makeStyles,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
+import React from "react";
 
 import UsersList from "../components/UsersList";
-import TravelsList from "../components/TravelsList";
+import TripList from "../components/TripList";
 
 export default ({ viewModel: homeViewModel }) => {
   return (
@@ -20,7 +12,7 @@ export default ({ viewModel: homeViewModel }) => {
             <UsersList homeViewModel={homeViewModel} />
           </div>
           <div className="col-9">
-            <TravelsList homeViewModel={homeViewModel} />
+            <TripList homeViewModel={homeViewModel} />
           </div>
         </div>
       </div>

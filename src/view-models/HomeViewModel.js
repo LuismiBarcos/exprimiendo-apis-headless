@@ -18,12 +18,12 @@ export default class HomeViewModel {
   }
 
   /**
-   * Set the travels of the Liferay Travels app
-   * @param {Function} setTravels Callback to set the travels
+   * Set the trips of the Liferay Travels app
+   * @param {Function} setTrips Callback to set the trips
    */
-  async getTravels(setTravels, setActions) {
+  async setTrips(setTrips, setActions) {
     this.tripService.getTrips().then((trips) => {
-      setTravels(trips.items);
+      setTrips(trips.items);
       setActions(trips.actions)
     });
   }

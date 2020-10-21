@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default withRouter(({ homeViewModel, location }) => {
   const classes = useStyles();
-  const [travels, setTravels] = useState([]);
+  const [trips, setTrips] = useState([]);
   const [actions, setActions] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [tripImageName, setTripImageName] = useState("");
@@ -71,8 +71,8 @@ export default withRouter(({ homeViewModel, location }) => {
   useEffect(() => {
     const searchParam = queryParams.get("search") || "";
     searchParam
-      ? homeViewModel.filterTrips(setTravels, setActions, searchParam)
-      : homeViewModel.getTravels(setTravels, setActions);
+      ? homeViewModel.filterTrips(setTrips, setActions, searchParam)
+      : homeViewModel.getTrips(setTrips, setActions);
   }, [homeViewModel, queryParams]);
 
   const handleModalOpen = () => {
@@ -86,7 +86,7 @@ export default withRouter(({ homeViewModel, location }) => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {travels.map((travel, index) => (
+        {trips.map((trip, index) => (
           <div key={index} className="col-6">
             <Card className="mt-3">
               <CardHeader
@@ -94,30 +94,30 @@ export default withRouter(({ homeViewModel, location }) => {
                   <Avatar
                     aria-label="travel"
                     alt="travelImage"
-                    src={travel.image}
+                    src={trip.image}
                   />
                 }
                 action={
-                  travel.actions["delete"] && (
+                  trip.actions["delete"] && (
                     <IconButton
                       aria-label="settings"
                       onClick={() => {
-                        homeViewModel.deleteTrip(travel.id);
+                        homeViewModel.deleteTrip(trip.id);
                       }}
                     >
                       <DeleteIcon />
                     </IconButton>
                   )
                 }
-                title={travel.name}
-                subheader={travel.startingDate}
+                title={trip.name}
+                subheader={trip.startingDate}
               />
-              <Link to={`${travel.id}/steps`}>
-                <CardMedia className={classes.media} image={travel.image} />
+              <Link to={`${trip.id}/stages`}>
+                <CardMedia className={classes.media} image={trip.image} />
               </Link>
               <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  {travel.description}
+                  {trip.description}
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>

@@ -183,7 +183,7 @@ export default withRouter(({ viewModel: appBarViewModel, location }) => {
               Liferay Travels
             </Typography>
           </Link>
-          {!location.pathname.includes("steps") && (
+          {!location.pathname.includes("stages") && (
             <>
               <div className={classes.search}>
                 <div className={classes.searchIcon}>

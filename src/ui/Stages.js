@@ -57,9 +57,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default withRouter(
   ({
-    viewModel: stepsViewModel,
+    viewModel: stagesViewModel,
     match: {
-      params: { travelId },
+      params: { tripId },
     },
   }) => {
     const classes = useStyles();
@@ -73,8 +73,8 @@ export default withRouter(
     const stageImage = useRef(null);
 
     useEffect(() => {
-      stepsViewModel.getTripStages(setStages, travelId);
-    }, [stepsViewModel, travelId]);
+      stagesViewModel.getTripStages(setStages, tripId);
+    }, [stagesViewModel, tripId]);
 
     const handleNext = () => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -100,22 +100,22 @@ export default withRouter(
       <div className="container mt-3">
         <div className={classes.root}>
           <Stepper activeStep={activeStep} orientation="vertical">
-            {stages.map((step, index) => (
+            {stages.map((stage, index) => (
               <Step key={index}>
                 <StepLabel>
-                  <Typography variant="h5">{step.place}</Typography>
+                  <Typography variant="h5">{stage.place}</Typography>
                 </StepLabel>
                 <StepContent>
                   <div>
                     <div>
-                      <img className="img-fluid" alt="" src={step.image} />
+                      <img className="img-fluid" alt="" src={stage.image} />
                     </div>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      {step.description}
+                      {stage.description}
                     </Typography>
                   </div>
                   <div className={classes.actionsContainer}>
@@ -133,12 +133,12 @@ export default withRouter(
                         onClick={handleNext}
                         className={classes.button}
                       >
-                        {activeStep === step.length - 1 ? "Finish" : "Next"}
+                        {activeStep === stage.length - 1 ? "Finish" : "Next"}
                       </Button>
                       <IconButton
                         aria-label="settings"
                         onClick={() => {
-                          stepsViewModel.deleteTripStage(step.id, travelId);
+                          stagesViewModel.deleteTripStage(stage.id, tripId);
                         }}
                       >
                         <DeleteIcon />
@@ -152,7 +152,7 @@ export default withRouter(
           {activeStep === stages.length && (
             <Paper square elevation={0} className={classes.resetContainer}>
               <Typography>
-                All steps completed - you&apos;re finished
+                All stages completed - you&apos;re finished
               </Typography>
               <Button onClick={handleReset} className={classes.button}>
                 Reset
@@ -231,9 +231,9 @@ export default withRouter(
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      stepsViewModel
+                      stagesViewModel
                         .createTripStage(
-                          travelId,
+                          tripId,
                           stageName.current.lastChild.firstChild.value,
                           stageDescription.current.lastChild.firstChild.value,
                           stagePlace.current.lastChild.firstChild.value,

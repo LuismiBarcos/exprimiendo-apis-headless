@@ -1,10 +1,10 @@
 import React from "react";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import Home from "./ui/Home";
-import Steps from "./ui/Steps";
+import Stages from "./ui/Stages";
 import AppBar from "./components/AppBar";
 import HomeViewModel from "./view-models/HomeViewModel";
-import StepsViewModel from "./view-models/StepsViewModel";
+import StagesViewModel from "./view-models/StagesViewModel";
 import LoginViewModel from "./view-models/LoginViewModel";
 import PrivateRoute from "./routes/PrivateRoute";
 import Login from "./ui/Login";
@@ -12,7 +12,7 @@ import AppBarViewModel from "./view-models/AppBarViewModel";
 
 export default function App() {
   const homeViewModel = new HomeViewModel();
-  const stepsViewModel = new StepsViewModel();
+  const stagesViewModel = new StagesViewModel();
   const loginViewModel = new LoginViewModel();
   const appBarViewModel = new AppBarViewModel();
   return (
@@ -31,10 +31,10 @@ export default function App() {
             exact
           />
           <PrivateRoute
-            component={Steps}
+            component={Stages}
             loginViewModel={loginViewModel}
-            viewModel={stepsViewModel}
-            path="/:travelId/steps"
+            viewModel={stagesViewModel}
+            path="/:tripId/stages"
             exact
           />
         </Switch>
