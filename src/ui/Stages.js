@@ -103,7 +103,9 @@ export default withRouter(
             {stages.map((stage, index) => (
               <Step key={index}>
                 <StepLabel>
-                  <Typography variant="h5">{stage.place}</Typography>
+                  <Typography variant="h5">
+                    {stage.name} - {stage.place}
+                  </Typography>
                 </StepLabel>
                 <StepContent>
                   <div>
