@@ -1,9 +1,9 @@
 import * as apiConstans from "../api/ApiConstans";
 import restConnections from "../api/RestConnections";
 import AuthorizationService from "../api/AuthorizationService";
+import { client, getUserAccountSitesQuery } from "../api/Client";
 
 export default class LoginService {
-
   /**
    * Login in the app. Return true if login is correct or false in other case
    * @param {String} username
@@ -14,16 +14,17 @@ export default class LoginService {
       username,
       password
     );
-    return new Promise((resolve, reject) => {
-      checkLoginCredentials(basicAuthToken).then((status) => {
-        if (status === 200) {
-          localStorage.setItem("token", basicAuthToken);
-          window.location.replace(`/`);
-          resolve(true);
-        }
-        reject(false);
-      });
-    });
+    return test(basicAuthToken);
+    // return new Promise((resolve, reject) => {
+    //   checkLoginCredentials(basicAuthToken).then((status) => {
+    //     if (status === 200) {
+    //       localStorage.setItem("token", basicAuthToken);
+    //       window.location.replace(`/`);
+    //       resolve(true);
+    //     }
+    //     reject(false);
+    //   });
+    // });
   }
 
   /**
@@ -41,6 +42,24 @@ export default class LoginService {
     return !!localStorage.getItem("token");
   }
 }
+
+const test = async (basicAuthToken) => {
+  localStorage.setItem("token", basicAuthToken);
+  return client
+    .query({
+      query: getUserAccountSitesQuery,
+    })
+    .then((response) => {
+      const groupId = response.data.myUserAccountSites.items[0].id;
+      localStorage.setItem("groupId", groupId);
+      window.location.replace(`/`);
+      return true;
+    })
+    .catch(() => {
+      localStorage.removeItem("token");
+      return false;
+    });
+};
 
 const checkLoginCredentials = async (basicAuthToken) => {
   const headers = restConnections.createHeadersBasicAuthorization(

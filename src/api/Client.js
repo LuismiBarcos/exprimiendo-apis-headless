@@ -34,7 +34,7 @@ export const getFilteredTrips = (filter) => {
       filter,
     },
   });
-}
+};
 
 export const getBlogsQuery = gql`
   query blogPostings($siteKey: String!) {
@@ -73,6 +73,30 @@ export const getUsersQuery = gql`
         emailAddress
         image
         biography
+      }
+    }
+  }
+`;
+
+export const getUsersBySiteQuery = gql`
+query siteUserAccounts($siteKey: String!){
+  siteUserAccounts(siteKey: $siteKey){
+    items {
+      biography
+      name
+      emailAddress
+      image
+    }
+  }
+}
+`;
+
+export const getUserAccountSitesQuery = gql`
+  query myUserAccountSites {
+    myUserAccountSites {
+      items {
+        name
+        id
       }
     }
   }

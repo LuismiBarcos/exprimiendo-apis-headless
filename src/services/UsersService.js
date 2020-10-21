@@ -1,4 +1,4 @@
-import { client, getUsersQuery } from "../api/Client";
+import { client, getUsersBySiteQuery, getUsersQuery } from "../api/Client";
 
 export default class UsersService {
   /**
@@ -7,7 +7,10 @@ export default class UsersService {
    */
     getUsers() {
     return client.query({
-      query: getUsersQuery,
-    });
+      query: getUsersBySiteQuery,
+      variables: {
+        siteKey: localStorage.getItem("groupId")
+      }
+    }).then(response => response.data.siteUserAccounts);
   }
 }

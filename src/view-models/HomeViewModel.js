@@ -12,8 +12,8 @@ export default class HomeViewModel {
    * @param {Function} setUsers Callbat to set the users
    */
   async getUsers(setUsers) {
-    this.usersService.getUsers().then((response) => {
-      setUsers(response.data.userAccounts.items);
+    this.usersService.getUsers().then((siteUserAccounts) => {
+      setUsers(siteUserAccounts.items);
     });
   }
 
